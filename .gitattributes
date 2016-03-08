@@ -1,0 +1,2 @@
+*.erb   eol=lf
+*.sh    eol=lf
