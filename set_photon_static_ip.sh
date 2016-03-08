@@ -30,6 +30,15 @@ PHOTON_NET
   ip link set $eth_no up
   echo "Enabling networking ..."
   systemctl restart systemd-networkd.service
+
+chkSecondIP=`ifconfig -a | grep "${regexChkIP}" | sed -E "s/.*inet addr:([^\s]*)\s\s+Bcast.*/\1/g"`
+  if [ "${chkSecondIP}" == "${IP_ADDRESS}" ]; then
+    echo "FOUND ==${chkSecondIP}== Set STATIC IP successfully :)"
+  else
+    echo "Fail to configure static IP."
+    exit 1
+  fi
+  
 else
   echo "Can't find interface name match MAC-ADDR ${mac}"
   exit 1
